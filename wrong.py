@@ -42,10 +42,14 @@ def copyfile(filename):
 	log("Copying", os.path.join(settings.sourcedir, filename), "to", os.path.join(settings.publishpath, filename))
 	shutil.copy2(os.path.join(settings.sourcedir, filename), os.path.join(settings.publishpath, filename))
 
+def genpre(match):
+	return '\n\n<pre class="story">'+match.group(1).replace('\n', '<br />')+'</pre>\n\n'
+
 regexes = (
 			(re.compile('(?<!_)_([^_]+?)_', re.M), r'<em>\1</em>'),
 			(re.compile('__'), '_'),
 			(re.compile('^#(.*?)\n', re.M), r'</p><h1 class="chapter">\1</h1><p class="story first">'),
+			(re.compile('\n\n@\n(.*?)\n@\n\n', re.S), genpre),#r'\n\n<pre class="story">\1</pre>\n\n'),
 			(re.compile('\n\n'), r'</p><p class="story">'),
 			)
 firstre = re.compile(r'!if:first!(.*?)!else!(.*?)!end!')
