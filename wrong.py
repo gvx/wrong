@@ -86,7 +86,7 @@ def processwrong(num, base, filename, first=False, last=False):
 	txt = txt.replace('--', '&mdash;').replace('...', '&hellip;')
 	for rex, subst in regexes:
 		txt = rex.sub(subst, txt)
-	txt = ('<p class="story">'+txt+'</p>').replace('<p class="story"></p>', '').replace('<p class="story first"></p>', '')
+	txt = ('<p class="story first">'+txt+'</p>').replace('<p class="story"></p>', '').replace('<p class="story first"></p>', '')
 	t['Text'] = txt
 	f = open(os.path.join(settings.publishpath, base, str(num)+settings.destext), 'w')
 	tmp = template
