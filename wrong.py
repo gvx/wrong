@@ -44,6 +44,8 @@ def copyfile(filename):
 	if os.stat(from_name).st_mtime > os.stat(to_name).st_mtime:
 		log("Copying", from_name, "to", to_name)
 		shutil.copy2(from_name, to_name)
+	else:
+		log("Skipping", from_name)
 
 def genpre(match):
 	return '\n\n<pre class="story">'+match.group(1).replace('\n', '<br />')+'</pre>\n\n'
