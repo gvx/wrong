@@ -41,7 +41,7 @@ def dodebug(*args, **kwargs):
 def copyfile(filename):
 	from_name = os.path.join(settings.sourcedir, filename)
 	to_name = os.path.join(settings.publishpath, filename)
-	if os.stat(from_name).st_mtime > os.stat(to_name).st_mtime:
+	if not os.path.exists(to_name) or os.stat(from_name).st_mtime > os.stat(to_name).st_mtime:
 		log("Copying", from_name, "to", to_name)
 		shutil.copy2(from_name, to_name)
 	else:
