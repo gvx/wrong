@@ -1,0 +1,18 @@
+ == Wrong, the wrong content processor ==
+
+What is the right way to generate HTML for blogs, stories or documentation?
+Markdown, Textile, Jekyll, plain HTML in Emacs, Sphinx, Haml, RDoc, ...
+
+But sometimes, you don't want to do the right thing.
+
+That's where Wrong enters the picture. Wrong is the wrong content processor,
+for any occasion. It generates HTML files from Wrong files, and is geared
+towards generating static websites and making awkward jokes in presence of
+your girlfriend's parents.
+
+Wrong can generate its own documentation. Run
+	$ ./wrong.py -s srcdocs/ -p docs/
+and point your favorite web browser to docs/index.html.
+
+The source of the documentation explains it all much better than this readme
+could.
