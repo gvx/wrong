@@ -172,14 +172,30 @@ def processtree(basedir, files=None):
 			key = lambda f: os.stat(os.path.join(dir, f)).st_ctime
 		elif settings.resolve == 'modified':
 			key = lambda f: os.stat(os.path.join(dir, f)).st_mtime
-		for k in problems:
-			v = problems[k]
-			v.sort(key=key, reverse=True)
-			for t in v[1:]:
-				for i,item in wrongs:
-					if item == t:
-						del wrongs[i]
-						break
+		if settings.resolve == 'interactive':
+			for k in sorted(problems.keys()):
+				v = problems[k]
+				print('please select file to use:', file=sys.stderr)
+				print(*[str(x[0])+':'+x[1] for x in enumerate(v)], file=sys.stderr)
+				n = len(v)
+				while n >= len(v):
+					n = toint(raw_input('?'))
+				for t in v:
+					for n,I in enumerate(wrongs):
+						i, item = I
+						if item == t:
+							del wrongs[n]
+							break
+		else:
+			for k in problems:
+				v = problems[k]
+				v.sort(key=key, reverse=True)
+				for t in v[1:]:
+					for n,I in enumerate(wrongs):
+						i, item = I
+						if item == t:
+							del wrongs[n]
+							break
 	f = wrongs[0][0]
 	l = wrongs[-1][0]
 	
@@ -224,6 +240,9 @@ def main():
 	parser.add_option("-a", "--alphabetic", action="store_const", const="alphabetic",
 						dest="resolve",
 						help="resolve alphabetically: pick 4b above 4a")
+	parser.add_option("-n", "--interactive", action="store_const", const="interactive",
+						dest="resolve",
+						help="resolve interactively: asks user every time which file to pick")
 	parser.add_option("-x", "--crash", action="store_const", const="crash",
 						dest="resolve",
 						help="resolve by crashing and specifying what went wrong (even without --dbg) (default)")
