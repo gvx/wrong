@@ -251,30 +251,18 @@ def main():
 		f.close()
 	except IOError:
 		pass
-	if options.publishdir:
-		settings.publishdir = options.publishdir
-	if options.sourcedir:
-		settings.sourcedir = options.sourcedir
-	if options.css:
-		settings.cssfile = options.css
-	if options.template:
-		settings.templatefile = options.template
-	if options.home:
-		settings.homepagefile = options.home
-	if not options.sensibleignore:
-		settings.sensibleignore = options.sensibleignore
+	settings.publishdir = options.publishdir or settings.publishdir
+	settings.sourcedir = options.sourcedir or settings.sourcedir
+	settings.cssfile = options.css or settings.cssfile
+	settings.templatefile = options.template or settings.templatefile
+	settings.homepagefile = options.home or settings.homepagefile
+	settings.sensibleignore = options.sensibleignore and settings.sensibleignore
 	if options.clevercss is not None:
 		settings.clevercss = options.clevercss
-	if options.resolve:
-		settings.resolve = options.resolve
-	if options.ext:
-		settings.destext = options.ext
-	if options.longdate:
-		settings.longdate = options.longdate
-	if options.ignore:
-		settings.ignore = options.ignore
-	elif not settings.ignore:
-		settings.ignore = ["publish"]
+	settings.resolve = options.resolve or settings.resolve
+	settings.destext = options.ext or settings.destext
+	settings.longdate = options.longdate or settings.longdate
+	settings.ignore = options.ignore or settings.ignore or ["publish"]
 
 	#settings.publishpath = os.path.join(settings.sourcedir, settings.publishdir) #ouch
 	settings.publishpath = settings.publishdir
