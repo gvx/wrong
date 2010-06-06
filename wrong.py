@@ -100,7 +100,7 @@ def processwrong(num, base, filename, first=False, last=False):
 	tmp = lastre.sub(last and r'\1' or r'\2', tmp)
 	f.write(tmp.format(**t))
 	f.close()
-	return {'Index': num, 'Title': t['Title']}
+	return t
 
 def toint(string):
 	istr = '0'
