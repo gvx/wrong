@@ -1,0 +1,28 @@
+body:
+	background-color: F0F0B8
+	
+h1:
+	font-family: Palatino,serif
+
+p:
+	&.story:
+		font-family: Palatino,serif
+	&.first:first-letter:
+		font-size: xx-large
+	&.footer:
+		font-family: serif
+
+pre:
+	&.story:
+		background-color: 000000
+		color: DFFFDF
+		padding: 1cm
+		-webkit-border-round: 10px
+
+div:
+	&.mainbody:
+		border-style: dashed
+		background-color: white
+		border-width: 1px
+		margin: 1cm 2cm 1cm 2cm
+		padding: 0.5cm 1cm 0cm 1cm

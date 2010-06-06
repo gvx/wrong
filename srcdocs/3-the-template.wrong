@@ -1,0 +1,34 @@
+Wrong
+Title: The template
+
+#The template
+The template file (default filename: “template.html”) is (almost) a regular HTML file. Remember to
+have a line like _<link href="clever.css" media="screen" rel="stylesheet" type="text/css" />_,
+because otherwised your css file will not be used!
+
+#Headers
+The headers from the wrong file are included in the form {HeaderName}. Don't forget to
+include {Text} somewhere!
+
+#Static ifs
+There are two of these:
+
+!if:first!This is the first page.!else!This is not the first page.!end!
+
+!if:last!This is the last page.!else!This is not the last page.!end!
+
+This is useful for having links to the next/previous post, preventing them to show on the first
+or last post.
+
+#Static for
+This is a special case, which doesn't affect your normal template, but only your
+home page template (which is only a template with respect to static for, since
+it does not have a number or Wrong file associated with it).
+
+!for:each!<p><a href="{Index}.html">{Title}</a></p>!end!
+
+This produces a listing of all top-level Wrong files, with links to their
+respective pages.
+
+All headers exposed to the individual templates, are exposed to the home page
+template as well, inside a static for. 

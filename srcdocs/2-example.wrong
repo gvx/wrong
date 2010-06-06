@@ -1,0 +1,29 @@
+Wrong
+Title: Introduction
+
+This is the introduction.
+
+#This is a new chapter
+
+But #this isn't.
+
+This is
+one
+long
+(well, not that long)
+paragraph.
+
+This & that, & is escaped, as are < and >. If you want a dash--and you do--
+two '-'s are all you need. And for a cliffhanger...
+
+Some _emphasis_ is in place (with __).
+
+
+
+
+Empty paragraphs merged.
+
+ 
+
+But put in a single space, and merging is prevented. (Although the browser
+will still merge it.)

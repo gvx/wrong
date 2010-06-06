@@ -1,0 +1,10 @@
+Wrong
+Title: Other files
+
+#Other files
+Files in the source directory that can't be processed by Wrong will just be
+copied to the publishing directory.
+
+There are two special cases: the CSS file you specify, which may be processed
+by CleverCSS before copying, and the home page, which is renamed to
+index.html and is templated as specified in “The template”.
