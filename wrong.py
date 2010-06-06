@@ -30,17 +30,20 @@ settings = Settings()
 
 def log(*text):
 	if settings.dbg:
-		print(*text)
+		print(*text, file=sys.stderr)
 
 def crash():
-	print("Aborting...")
+	print("Aborting...", file=sys.stderr)
 
 def dodebug(*args, **kwargs):
 	settings.dbg = True
 
 def copyfile(filename):
-	log("Copying", os.path.join(settings.sourcedir, filename), "to", os.path.join(settings.publishpath, filename))
-	shutil.copy2(os.path.join(settings.sourcedir, filename), os.path.join(settings.publishpath, filename))
+	from_name = os.path.join(settings.sourcedir, filename)
+	to_name = os.path.join(settings.publishpath, filename)
+	if os.stat(from_name).st_mtime > os.stat(to_name).st_mtime:
+		log("Copying", from_name, "to", to_name)
+		shutil.copy2(from_name, to_name)
 
 def genpre(match):
 	return '\n\n<pre class="story">'+match.group(1).replace('\n', '<br />')+'</pre>\n\n'
@@ -154,10 +157,10 @@ def processtree(basedir, files=None):
 	if problems:
 		key = None
 		if settings.resolve == 'crash':
-			print("wrong: could not resolve which Wrong file to select")
-			print("in {0}:".format(basedir))
+			print("wrong: could not resolve which Wrong file to select", file=sys.stderr)
+			print("in {0}:".format(basedir), file=sys.stderr)
 			for k in sorted(problems.keys()):
-				print(*problems[k])
+				print(*problems[k], file=sys.stderr)
 			crash()
 			exit()
 		elif settings.resolve == 'alphabetic':
