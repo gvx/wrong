@@ -59,6 +59,7 @@ regexes = (
 			)
 firstre = re.compile(r'!if:first!(.*?)!else!(.*?)!end!')
 lastre = re.compile(r'!if:last!(.*?)!else!(.*?)!end!')
+eachre = re.compile(r'!for:each!(.*?)!end!')
 def processwrong(num, base, filename, first=False, last=False):
 	log("Processing Wrong file",filename)
 	source_fn = os.path.join(settings.sourcedir, base, filename)
@@ -99,6 +100,7 @@ def processwrong(num, base, filename, first=False, last=False):
 	tmp = lastre.sub(last and r'\1' or r'\2', tmp)
 	f.write(tmp.format(**t))
 	f.close()
+	return {'Index': num, 'Title': t['Title']}
 
 def toint(string):
 	istr = '0'
@@ -180,8 +182,11 @@ def processtree(basedir, files=None):
 						break
 	f = wrongs[0][0]
 	l = wrongs[-1][0]
+	
+	wlist = []
 	for n, name in wrongs:
-		processwrong(n, basedir, name, first=n==f, last=n==l)
+		wlist.append(processwrong(n, basedir, name, first=n==f, last=n==l))
+	return wlist
 
 def main():
 	global template
@@ -310,8 +315,6 @@ def main():
 	if settings.homepagefile not in basedir_files:
 		print("Home page file not found!")
 		return crash()
-	log("Copying home page")
-	shutil.copy2(os.path.join(settings.sourcedir, settings.homepagefile), os.path.join(settings.publishpath, 'index.html'))
 	basedir_files.remove(settings.homepagefile)
 	if settings.sensibleignore:
 		basedir_files = [x for x in basedir_files if not (x.startswith('.') or x.endswith('~'))]
@@ -320,7 +323,17 @@ def main():
 			basedir_files.remove(ignoreitem)
 	log('Files to process in base dir:')
 	log('   '.join(basedir_files))
-	processtree('', basedir_files)
+	wrongfiles = processtree('', basedir_files)
+	log("Copying home page")
+	tmp = open(os.path.join(settings.sourcedir, settings.homepagefile)).read()
+	def repl(match):
+		s = []
+		for file in wrongfiles:
+			s.append(match.group(1).format(**file))
+		return '\n'.join(s)
+	tmp = eachre.sub(repl, tmp)
+	with open(os.path.join(settings.publishpath, 'index.html'), 'w') as f:
+		f.write(tmp)
 
 if __name__ == "__main__":
 	main()
