@@ -141,7 +141,6 @@ def processtree(basedir, files=None):
 				wrongs.append(item)
 			else:
 				fn = os.path.join(basedir, item)
-				log("Copying",fn)
 				copyfile(fn)
 	wrongs = sorted([(toint(k), k) for k in wrongs])
 	problems = {}
